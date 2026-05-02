@@ -489,9 +489,6 @@ def main():
             case "4":
                 print("\n  Shutting down JKUAT Weather System...")
                 print("  ─────────────────────────────────────────")
-                print("  END OF MILESTONE 2")
-                print("  Control Logic & Object Introduction ")
-                print("  Next → Milestone 3: Data Structures & Full OOP")
                 print("=" * 60)
                 break
             case _:
