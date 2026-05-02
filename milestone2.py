@@ -1,16 +1,10 @@
 
-TEMP_HEATWAVE      = 35.0   
-TEMP_OPTIMAL_LOW   = 20.0   
-TEMP_COLD          = 10.0   
-RAINFALL_CROP_NEED = 5.0    
-RAINFALL_LOW       = 2.0   
-RAINFALL_HEAVY     = 25.0   
-WIND_STRONG        = 50.0  
-WIND_MODERATE      = 30.0  
-HUMIDITY_DISEASE   = 85.0   
-HUMIDITY_DRY       = 30.0  
-AQI_UNHEALTHY      = 150    
-AQI_MODERATE       = 100    
+TEMP_HEATWAVE      = 35.0 ;  WIND_STRONG        = 50.0  
+TEMP_OPTIMAL_LOW   = 20.0 ;  WIND_MODERATE      = 30.0 
+TEMP_COLD          = 10.0 ;  HUMIDITY_DISEASE   = 85.0  
+RAINFALL_CROP_NEED = 5.0  ;  HUMIDITY_DRY       = 30.0  
+RAINFALL_LOW       = 2.0  ;  AQI_UNHEALTHY      = 150 
+RAINFALL_HEAVY     = 25.0 ;  AQI_MODERATE       = 100   
 
 VALID_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday",
               "Friday", "Saturday", "Sunday"]
