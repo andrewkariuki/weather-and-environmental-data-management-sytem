@@ -43,7 +43,6 @@ class EnvironmentalReading(ABC):
         return self.get_summary()
 
 
-
 class WeatherReading(EnvironmentalReading): # INHERITANCE: implements all three abstract methods.
     def __init__(self, day, temperature, humidity,
                  rainfall, wind_speed, wind_direction, aqi,
