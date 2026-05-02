@@ -919,15 +919,6 @@ def main():
                 logger.event("System shutdown")
                 print("\n  Shutting down JKUAT Weather System...")
                 print("  ─────────────────────────────────────────────────")
-                print("  END OF MILESTONE 4")
-                print("  Modular Architecture & System Robustness")
-                print("  What was added:")
-                print("   ✔ WeatherConfig   — centralised constants & paths")
-                print("   ✔ WeatherLogger   — persistent timestamped log file")
-                print("   ✔ WeatherFileHandler — CSV + JSON save/load")
-                print("   ✔ Custom exception hierarchy (5 exception types)")
-                print("   ✔ All file I/O wrapped in try/except/finally")
-                print("  Next → Milestone 5: Concurrency & Advanced Computation")
                 print("=" * 60)
                 break
             case _:
