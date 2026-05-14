@@ -1,0 +1,106 @@
+[2026-05-14 15:14:54] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-14 15:14:55] [INFO   ] Running simulation...
+[2026-05-14 15:14:56] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-14 15:14:56] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-14 15:16:50] [EVENT  ] Live reading: Monday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:16:50] [INFO   ] Reading added: Monday
+[2026-05-14 15:16:55] [EVENT  ] Live reading: Tuesday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:16:55] [INFO   ] Reading added: Tuesday
+[2026-05-14 15:17:01] [EVENT  ] Live reading: Wednesday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:17:01] [INFO   ] Reading added: Wednesday
+[2026-05-14 15:17:06] [EVENT  ] Live reading: Thursday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:17:06] [INFO   ] Reading added: Thursday
+[2026-05-14 15:17:11] [EVENT  ] Live reading: Friday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:17:11] [INFO   ] Reading added: Friday
+[2026-05-14 15:17:15] [EVENT  ] Live reading: Saturday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:17:15] [INFO   ] Reading added: Saturday
+[2026-05-14 15:17:20] [EVENT  ] Live reading: Sunday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:17:20] [INFO   ] Reading added: Sunday
+[2026-05-14 15:17:23] [EVENT  ] CSV saved: weather_data\weather_readings.csv (14 records)
+[2026-05-14 15:17:23] [INFO   ] CSV saved.
+[2026-05-14 15:17:47] [INFO   ] Analysis complete — 14 readings.
+[2026-05-14 15:17:54] [INFO   ] Dataset cleared.
+[2026-05-14 15:18:03] [EVENT  ] Live reading: Sunday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:03] [INFO   ] Reading added: Sunday
+[2026-05-14 15:18:07] [EVENT  ] Live reading: Saturday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:07] [INFO   ] Reading added: Saturday
+[2026-05-14 15:18:11] [EVENT  ] Live reading: Friday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:11] [INFO   ] Reading added: Friday
+[2026-05-14 15:18:15] [EVENT  ] Live reading: Thursday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:15] [INFO   ] Reading added: Thursday
+[2026-05-14 15:18:19] [EVENT  ] Live reading: Wednesday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:19] [INFO   ] Reading added: Wednesday
+[2026-05-14 15:18:24] [EVENT  ] Live reading: Tuesday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:24] [INFO   ] Reading added: Tuesday
+[2026-05-14 15:18:29] [EVENT  ] Live reading: Monday | 23.0°C | 43% | 1000.0mm | 12.0km/h SE | AQI:23 | CRITICAL
+[2026-05-14 15:18:29] [INFO   ] Reading added: Monday
+[2026-05-14 15:18:37] [EVENT  ] CSV saved: weather_data\weather_readings.csv (7 records)
+[2026-05-14 15:18:37] [INFO   ] CSV saved.
+[2026-05-14 15:18:51] [INFO   ] Summary refreshed — 7 readings.
+[2026-05-14 15:19:16] [INFO   ] Analysis complete — 7 readings.
+[2026-05-14 15:19:32] [EVENT  ] Open-Meteo: 93 real + 907 generated = 1000 rows
+[2026-05-14 15:19:32] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 181.0 KB)
+[2026-05-14 15:19:32] [INFO   ] Power BI export complete.
+[2026-05-14 15:19:39] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 15:19:39] [INFO   ] CSV saved.
+[2026-05-14 15:19:53] [INFO   ] Analysis complete — 1000 readings.
+[2026-05-14 15:20:21] [INFO   ] Summary refreshed — 1000 readings.
+[2026-05-14 15:23:28] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-14 15:23:29] [INFO   ] Running simulation...
+[2026-05-14 15:23:29] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-14 15:23:29] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-14 15:30:36] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-14 15:31:05] [EVENT  ] Sensor run: 1400 readings from 7 threads
+[2026-05-14 15:31:05] [INFO   ] Sensor run complete — 0 readings.
+[2026-05-14 15:31:19] [EVENT  ] CSV loaded: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 15:31:19] [INFO   ] CSV loaded.
+[2026-05-14 15:31:43] [INFO   ] Dataset cleared.
+[2026-05-14 15:32:03] [EVENT  ] Open-Meteo: 93 real + 907 generated = 1000 rows
+[2026-05-14 15:32:03] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 181.0 KB)
+[2026-05-14 15:32:03] [INFO   ] Power BI export complete.
+[2026-05-14 15:32:11] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 15:32:11] [INFO   ] CSV saved.
+[2026-05-14 15:32:22] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 15:32:22] [INFO   ] CSV saved.
+[2026-05-14 19:32:15] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-14 19:33:09] [EVENT  ] Live reading: Monday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:09] [INFO   ] Reading added: Monday
+[2026-05-14 19:33:15] [EVENT  ] Live reading: Tuesday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:15] [INFO   ] Reading added: Tuesday
+[2026-05-14 19:33:19] [EVENT  ] Live reading: Wednesday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:19] [INFO   ] Reading added: Wednesday
+[2026-05-14 19:33:24] [EVENT  ] Live reading: Thursday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:24] [INFO   ] Reading added: Thursday
+[2026-05-14 19:33:28] [EVENT  ] Live reading: Friday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:28] [INFO   ] Reading added: Friday
+[2026-05-14 19:33:32] [EVENT  ] Live reading: Saturday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:32] [INFO   ] Reading added: Saturday
+[2026-05-14 19:33:39] [EVENT  ] Live reading: Sunday | 23.0°C | 43% | 100.0mm | 67.0km/h SE | AQI:67 | CRITICAL
+[2026-05-14 19:33:39] [INFO   ] Reading added: Sunday
+[2026-05-14 19:33:48] [EVENT  ] CSV saved: weather_data\weather_readings.csv (7 records)
+[2026-05-14 19:33:48] [INFO   ] CSV saved.
+[2026-05-14 19:34:11] [EVENT  ] CSV loaded: weather_data\weather_readings.csv (7 records)
+[2026-05-14 19:34:11] [INFO   ] CSV loaded.
+[2026-05-14 19:35:01] [EVENT  ] Open-Meteo: 93 real + 907 generated = 1000 rows
+[2026-05-14 19:35:01] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 181.0 KB)
+[2026-05-14 19:35:01] [INFO   ] Power BI export complete.
+[2026-05-14 19:35:25] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 19:35:25] [INFO   ] CSV saved.
+[2026-05-14 19:35:26] [EVENT  ] CSV loaded: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 19:35:26] [INFO   ] CSV loaded.
+[2026-05-14 19:35:43] [INFO   ] Analysis complete — 1000 readings.
+[2026-05-14 19:35:49] [INFO   ] Running simulation...
+[2026-05-14 19:35:50] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-14 19:35:50] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-14 19:36:13] [INFO   ] Analysis complete — 7 readings.
+[2026-05-14 19:36:26] [EVENT  ] Sensor run: 1400 readings from 7 threads
+[2026-05-14 19:36:26] [INFO   ] Sensor run complete — 0 readings.
+[2026-05-14 19:36:30] [EVENT  ] Sensor CSV: weather_data\sensor_readings.csv (1400 readings | 66.7 KB)
+[2026-05-14 19:36:43] [EVENT  ] CSV loaded: weather_data\weather_readings.csv (1000 records)
+[2026-05-14 19:36:43] [INFO   ] CSV loaded.
+[2026-05-14 19:37:25] [INFO   ] Summary refreshed — 1000 readings.
+[2026-05-14 19:37:33] [INFO   ] Running simulation...
+[2026-05-14 19:37:34] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-14 19:37:34] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-14 19:37:38] [INFO   ] Summary refreshed — 7 readings.
+[2026-05-14 19:43:35] [EVENT  ] M6 JavaFX started — clean architecture build
