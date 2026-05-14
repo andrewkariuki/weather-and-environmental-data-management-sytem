@@ -40,30 +40,7 @@ import jkuat.weather.services.WeatherDataset;
 import jkuat.weather.utils.Cfg;
 import jkuat.weather.utils.WeatherLogger;
 
-/**
- * CONTROLLERS PACKAGE — bridges UI panels to backend services.
- *
- * Pattern:
- *   UI (button click)  →  Controller method  →  Task (background thread)
- *                      →  Platform.runLater() →  UI update
- *
- * Controllers receive shared state (dataset, observableLists, logger)
- * via constructor injection — no static globals, easy to test.
- *
- * One controller per major panel:
- *   SimulationController   — runSimulation()
- *   SensorController       — runSensors(), exportSensorCsv()
- *   AnalysisController     — runAnalysis()
- *   SummaryController      — refreshSummary()
- *   FileController         — save(), load()
- *   PowerBIController      — export()
- *   DashboardController    — refreshDashboard(), updateLiveFeed()
- */
-
-
-// ============================================================
-//  SimulationController
-// ============================================================
+//controller for updating dataset
 public class SimulationController {
 
     private final WeatherDataset             dataset;
@@ -81,11 +58,7 @@ public class SimulationController {
         this.onComplete  = onComplete;
     }
 
-    /**
-     * Loads the 7-day SimData.WEEKLY dataset with 100ms delay between rows
-     * so the table animates row-by-row.
-     * Runs on a background Task — never blocks the UI thread.
-     */
+    //loads 7-day simulation data
     public Task<Void> buildTask(Node simPanel) {
         return new Task<>() {
             @Override
@@ -140,11 +113,8 @@ public class SimulationController {
             dataset.avgTemp().orElse(0), dataset.maxTemp(), dataset.totalRainfall(),
             dataset.criticalDays().size(), dataset.dryDays().size())));
     }
-
-
-    // ============================================================
-    //  SensorController
-    // ============================================================
+    
+    //sensor controller
     public static class SensorController {
 
     private final ObservableList<SensorReading> sensorRows;
@@ -159,10 +129,7 @@ public class SimulationController {
         this.logger     = logger;
     }
 
-    /**
-     * Builds the background Task that runs ConcurrentSensorFeed.run().
-     * On success, updates the sensor table and alert bar.
-     */
+    //builds a task that runs concurrent sensor
     public Task<List<SensorReading>> buildTask(int numSensors, int n,
                                                Label statusLbl, Node sensorPanel) {
         ConcurrentSensorFeed feed = new ConcurrentSensorFeed(n, numSensors);
@@ -228,17 +195,13 @@ public class SimulationController {
     }
     }
 
-
-    // ============================================================
-    //  AnalysisController
-    // ============================================================
+//analysis controller 
     public static class AnalysisController {
 
     private final WeatherDataset dataset;
 
     public AnalysisController(WeatherDataset ds) { this.dataset = ds; }
-
-    /** Populate line chart + analytics table — called on JavaFX thread. */
+//populate line chat
     public void runAnalysis(Node analysisPanel) {
         if (dataset.isEmpty()) return;
 
@@ -302,10 +265,7 @@ public class SimulationController {
     }
     }
 
-
-    // ============================================================
-    //  SummaryController
-    // ============================================================
+//summary controller
     public static class SummaryController {
 
     private final WeatherDataset dataset;
@@ -386,10 +346,7 @@ public class SimulationController {
     }
     }
 
-
-    // ============================================================
-    //  FileController
-    // ============================================================
+    //file controller for saving/loading dataset to CSV
     public static class FileController {
 
     private final WeatherDataset             dataset;
@@ -421,10 +378,7 @@ public class SimulationController {
     }
     }
 
-
-    // ============================================================
-    //  PowerBIController
-    // ============================================================
+//power bi export controller
     public static class PowerBIController {
 
     private final WeatherDataset             dataset;
@@ -440,7 +394,7 @@ public class SimulationController {
         this.onComplete  = onComplete;
     }
 
-    /** Export current session data (option A). */
+    //Export current session data 
     public Task<String> buildSessionTask() {
         return new Task<>() {
             @Override
@@ -474,7 +428,7 @@ public class SimulationController {
         };
     }
 
-    /** Export from API or generator (options B / C). */
+//export from API or generated data
     public Task<String> buildExportTask(boolean useApi) {
         return new Task<>() {
             @Override
@@ -496,17 +450,14 @@ public class SimulationController {
     }
     }
 
-
-    // ============================================================
-    //  DashboardController
-    // ============================================================
+//dashboard controller
     public static class DashboardController {
 
     private final WeatherDataset             dataset;
     private final ObservableList<SensorReading> liveFeedRows;
     private final WeatherLogger              logger;
 
-    // Color constants (same palette as WeatherSystemM6)
+    // Color constants 
     private static final String RED    = "#FF4060";
     private static final String YELLOW = "#FFD060";
     private static final String GREEN  = "#00E5A0";
@@ -525,15 +476,14 @@ public class SimulationController {
         this.logger       = log;
     }
 
-    /** Push one new sensor reading into the rolling live feed (max 8 rows). */
+   //push new sensor reading
     public void pushLiveSensorReading(SensorReading sr) {
         Platform.runLater(() -> {
             liveFeedRows.add(0, sr);
             if (liveFeedRows.size() > 8) liveFeedRows.remove(liveFeedRows.size() - 1);
         });
     }
-
-    /** Refresh all dashboard widgets after dataset changes. Called after simulation/load. */
+//refresh dashboard with latest dataset
     public void refreshDashboard(Node dashPanel) {
         if (dataset.isEmpty() || dashPanel == null) return;
         Platform.runLater(() -> {
@@ -546,7 +496,7 @@ public class SimulationController {
         });
     }
 
-    /** Rebuild the live sensor feed list from liveFeedRows. */
+//rebuild live sensor feed
     public void updateLiveFeed(Node dashPanel) {
         if (dashPanel == null) return;
         VBox feedList = (VBox) dashPanel.lookup("#dash_feedlist");
@@ -556,9 +506,7 @@ public class SimulationController {
             feedList.getChildren().add(buildFeedRow(sr, feedList.getChildren().isEmpty()));
         }
     }
-
-    // ── Private update helpers ───────────────────────────────────────────────
-
+//dashboard update methods 
     private void updateHero(Node panel) {
         Label tempBig = (Label) panel.lookup("#dash_tempbig");
         if (tempBig != null)
@@ -651,9 +599,7 @@ public class SimulationController {
             }
         });
     }
-
-    // ── Widget builders ──────────────────────────────────────────────────────
-
+//widet methods for building forecast cards and feed rows
     private VBox buildForecastCard(WeatherReading r, boolean isToday) {
         VBox card = new VBox(4);
         card.setAlignment(javafx.geometry.Pos.CENTER);

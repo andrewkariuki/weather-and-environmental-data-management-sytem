@@ -71,25 +71,10 @@ import jkuat.weather.services.WeatherDataset;
 import jkuat.weather.utils.Cfg;
 import jkuat.weather.utils.WeatherLogger;
 
-/**
- * WeatherSystemM6 — JavaFX Application entry point.
- *
- * RESPONSIBILITY: UI construction only.
- *   • Builds layout (BorderPane → sidebar, top bar, content area)
- *   • Builds each panel's skeleton (labels, tables, charts)
- *   • Wires button events → Controller methods
- *   • Manages panel switching (StackPane + FadeTransition)
- *
- * Everything else lives in:
- *   controllers/  — event logic and UI update methods
- *   services/     — dataset, sensor feed, API, file I/O
- *   models/       — domain objects
- *   enums/        — AlertLevel, SystemStatus, WindDirection
- *   utils/        — Cfg, WeatherLogger
- */
+//main application class
 public class WeatherSystemM6 extends Application {
 
-    // ── Shared state (injected into controllers) ─────────────────────────────
+   //state model
     private final WeatherLogger              logger      = new WeatherLogger();
     private final WeatherFileHandler         fileHandler = new WeatherFileHandler(logger);
     private final WeatherDataset             dataset     = new WeatherDataset();
@@ -98,7 +83,7 @@ public class WeatherSystemM6 extends Application {
     private final ObservableList<SensorReading>  liveFeedRows= FXCollections.observableArrayList();
     private final List<SensorReading>            lastSensorBatch = new ArrayList<>();
 
-    // ── Controllers ──────────────────────────────────────────────────────────
+    //controllers
     private SimulationController simCtrl;
     private SimulationController.SensorController     sensorCtrl;
     private SimulationController.AnalysisController   analysisCtrl;
@@ -108,12 +93,12 @@ public class WeatherSystemM6 extends Application {
     private SimulationController.DashboardController  dashCtrl;
     private boolean liveTickerStarted = false;
 
-    // ── UI references ────────────────────────────────────────────────────────
+//ui components
     private StackPane contentArea;
     private Label     statusBar;
     private final Map<String, Node> panels = new LinkedHashMap<>();
 
-    // ── Colour palette ───────────────────────────────────────────────────────
+  //color definitions
     static final String BG     = "#060D1F";
     static final String PANEL  = "#0A1628";
     static final String CARD   = "#0D1E36";
@@ -129,9 +114,7 @@ public class WeatherSystemM6 extends Application {
     static final String MUTED  = "#4A7FA5";
     static final String DIM    = "#2A4A6A";
 
-    // ====================================================================
-    //  APPLICATION START
-    // ====================================================================
+  //abstract method to launch the application
     @Override
     public void start(Stage stage) {
         initControllers();
@@ -143,8 +126,7 @@ public class WeatherSystemM6 extends Application {
         root.setLeft(buildSidebar());
         root.setCenter(buildCenter());
         root.setBottom(buildStatusBar());
-
-        // Build panels — pure structure, no logic
+//build panels 
         panels.put("dashboard",  buildDashboard());
         panels.put("simulation", buildSimulation());
         panels.put("livedata",   buildLiveData());
@@ -194,7 +176,7 @@ public class WeatherSystemM6 extends Application {
         }
     }
 
-    /** Instantiate all controllers, passing shared state via constructor injection. */
+    //initialize controllers with shared state and UI update callbacks
     private void initControllers() {
         simCtrl      = new SimulationController(dataset, readingRows, logger,
                             () -> dashCtrl.refreshDashboard(panels.get("dashboard")));
@@ -208,9 +190,7 @@ public class WeatherSystemM6 extends Application {
         dashCtrl     = new SimulationController.DashboardController(dataset, liveFeedRows, logger);
     }
 
-    // ====================================================================
-    //  TOP BAR
-    // ====================================================================
+  //top bar
     private Node buildTopBar() {
         HBox bar = new HBox(14);
         bar.setPadding(new Insets(0, 24, 0, 20));
@@ -250,9 +230,7 @@ public class WeatherSystemM6 extends Application {
         return bar;
     }
 
-    // ====================================================================
-    //  SIDEBAR
-    // ====================================================================
+//side bar & navigation
     private Node buildSidebar() {
         VBox sb = new VBox(2);
         sb.setPrefWidth(200);
@@ -303,9 +281,7 @@ public class WeatherSystemM6 extends Application {
                "-fx-border-color:" + ACCENT + "; -fx-border-width:0 0 0 2; -fx-border-radius:0;";
     }
 
-    // ====================================================================
-    //  CENTER + STATUS
-    // ====================================================================
+  //center content area
     private StackPane buildCenter() {
         contentArea = new StackPane();
         contentArea.setStyle("-fx-background-color:" + BG + ";");
@@ -336,9 +312,7 @@ public class WeatherSystemM6 extends Application {
         logger.info(msg);
     }
 
-    // ====================================================================
-    //  LIVE SENSOR TICKER  (runs on JavaFX animation thread)
-    // ====================================================================
+  //live sensor feed
     private void startLiveSensorTicker() {
         Random rng = new Random();
         String[][] SENSORS = ConcurrentSensorFeed.SENSORS;
@@ -356,9 +330,7 @@ public class WeatherSystemM6 extends Application {
         ticker.play();
     }
 
-    // ====================================================================
-    //  SIMULATION PANEL — structure only
-    // ====================================================================
+//simulation panel
     private Node buildSimulation() {
         VBox v = vbx(14, 24);
         v.getChildren().addAll(
@@ -405,7 +377,7 @@ public class WeatherSystemM6 extends Application {
         status("Fetching real data from Open-Meteo...");
     }
 
-    /** Delegates to SimulationController — UI thread safe. */
+  //simulate data loading with background task and UI updates
     private void runSimulation() {
         Task<Void> task = simCtrl.buildTask(panels.get("simulation"));
         task.setOnSucceeded(e -> {
@@ -419,14 +391,12 @@ public class WeatherSystemM6 extends Application {
         status("Running simulation...");
     }
 
-    // ====================================================================
-    //  DASHBOARD PANEL — structure only (DashboardController updates it)
-    // ====================================================================
+   //dashboard panel
     private Node buildDashboard() {
         VBox root = new VBox(0);
         root.setStyle("-fx-background-color:" + BG + ";");
 
-        // Row 1 — Hero
+        // Row 1
         HBox heroRow = new HBox(0); heroRow.setPrefHeight(145);
 
         VBox heroLeft = new VBox(4); heroLeft.setPadding(new Insets(20, 30, 16, 24));
@@ -456,7 +426,7 @@ public class WeatherSystemM6 extends Application {
         heroRight.getChildren().addAll(lbl("ALERTS", 9, MUTED, true), alertsBox, alertCount);
         heroRow.getChildren().addAll(heroLeft, heroRight);
 
-        // Row 2 — KPI strip
+        // Row 2 
         HBox kpiStrip = new HBox(0); kpiStrip.setPrefHeight(72);
         kpiStrip.getChildren().addAll(
             kpiCell("AVG TEMP",   "—", "°C",    RED,    "dash_kpi_temp"),
@@ -465,7 +435,7 @@ public class WeatherSystemM6 extends Application {
             kpiCell("PEAK AQI",   "—", "",      PURPLE, "dash_kpi_aqi")
         );
 
-        // Row 3 — Alert banner
+        // Row 3  Alert banner
         HBox alertBanner = new HBox(10); alertBanner.setAlignment(Pos.CENTER_LEFT);
         alertBanner.setPadding(new Insets(10, 20, 10, 20));
         alertBanner.setStyle("-fx-background-color:#1A0510; -fx-border-color:" + RED + "; -fx-border-width:0 0 0 3;");
@@ -476,12 +446,12 @@ public class WeatherSystemM6 extends Application {
         Label bannerLbl = lbl("CRITICAL", 10, RED, true);
         alertBanner.getChildren().addAll(bannerDot, bannerLbl, bannerMsg);
 
-        // Row 4 — Forecast row
+        // Row 4  Forecast row
         HBox forecastRow = new HBox(0); forecastRow.setPrefHeight(110); forecastRow.setId("dash_forecastrow");
         forecastRow.setStyle("-fx-background-color:" + CARD + "; -fx-border-color:" + BORDER + "; -fx-border-width:0 0 1 0;");
         forecastRow.getChildren().add(lbl("Run simulation to see 7-day forecast", 12, MUTED, false));
 
-        // Row 5 — Chart + sensor feed
+        // Row 5 Chart & sensor feed
         HBox bottomRow = new HBox(0); VBox.setVgrow(bottomRow, Priority.ALWAYS);
 
         VBox chartArea = new VBox(0); HBox.setHgrow(chartArea, Priority.ALWAYS);
@@ -520,9 +490,7 @@ public class WeatherSystemM6 extends Application {
         return cell;
     }
 
-    // ====================================================================
-    //  LIVE DATA PANEL
-    // ====================================================================
+ //live data entry panel
     private Node buildLiveData() {
         ScrollPane sc = scr(); VBox v = vbx(20, 24); v.setMaxWidth(720);
         v.getChildren().addAll(
@@ -583,9 +551,7 @@ public class WeatherSystemM6 extends Application {
         a.showAndWait();
     }
 
-    // ====================================================================
-    //  SUMMARY PANEL
-    // ====================================================================
+//summary & alerts panel
     private Node buildSummary() {
         VBox v = vbx(16, 24);
         v.getChildren().addAll(
@@ -612,9 +578,7 @@ public class WeatherSystemM6 extends Application {
         ScrollPane sc = scr(); sc.setContent(v); return sc;
     }
 
-    // ====================================================================
-    //  ANALYSIS PANEL
-    // ====================================================================
+   //analysis panel
     private Node buildAnalysis() {
         VBox v = vbx(16, 24);
         v.getChildren().addAll(
@@ -641,9 +605,7 @@ public class WeatherSystemM6 extends Application {
         ScrollPane sc = scr(); sc.setContent(v); return sc;
     }
 
-    // ====================================================================
-    //  FILES PANEL
-    // ====================================================================
+   //file handling panel
     private Node buildFiles() {
         VBox v = vbx(20, 24);
         v.getChildren().addAll(
@@ -652,7 +614,7 @@ public class WeatherSystemM6 extends Application {
 
         Label fb = lbl("", 13, GREEN, false); fb.setWrapText(true);
 
-        // Buttons wire directly to fileCtrl — no logic in UI class
+        // Buttons 
         Button saveBtn = accentBtn("SAVE TO CSV", GREEN, () -> {
             try {
                 String msg = fileCtrl.save();
@@ -684,9 +646,7 @@ public class WeatherSystemM6 extends Application {
         ScrollPane sc = scr(); sc.setContent(v); return sc;
     }
 
-    // ====================================================================
-    //  LOG PANEL
-    // ====================================================================
+    //system log panel
     private Node buildLog() {
         VBox v = vbx(12, 24);
         v.getChildren().addAll(
@@ -707,9 +667,7 @@ public class WeatherSystemM6 extends Application {
         ScrollPane sc = scr(); sc.setContent(v); return sc;
     }
 
-    // ====================================================================
-    //  SENSORS PANEL
-    // ====================================================================
+    //concurrent sensor feed panel
     private Node buildSensors() {
         VBox v = vbx(16, 24);
         v.getChildren().addAll(
@@ -758,9 +716,7 @@ public class WeatherSystemM6 extends Application {
         ScrollPane sc = scr(); sc.setContent(v); return sc;
     }
 
-    // ====================================================================
-    //  POWER BI PANEL
-    // ====================================================================
+   //power BI export panel
     private Node buildPowerBI() {
         ScrollPane sc = scr(); VBox v = vbx(20, 24);
         v.getChildren().addAll(
@@ -824,10 +780,8 @@ public class WeatherSystemM6 extends Application {
         v.getChildren().addAll(optCard, expBtn, pb, fb, tip);
         sc.setContent(v); return sc;
     }
-
-    // ====================================================================
-    //  UI HELPERS  (pure layout utilities — no business logic)
-    // ====================================================================
+    
+//utility methods
     Label lbl(String t, int sz, String col, boolean bold) {
         Label l = new Label(t);
         l.setStyle("-fx-text-fill:" + col + "; -fx-font-size:" + sz +

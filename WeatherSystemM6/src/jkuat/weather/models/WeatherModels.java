@@ -6,18 +6,7 @@ import jkuat.weather.utils.Cfg;
 
 public class WeatherModels {
 
-// ============================================================
-//  ABSTRACT BASE — EnvironmentalReading
-// ============================================================
-/**
- * EnvironmentalReading — abstract base for all sensor/weather data objects.
- *
- * Enforces:
- *   • day validation against Cfg.VALID_DAYS
- *   • getSummary(), getOverallStatus(), getAlertLevel() contract
- *
- * Subclasses: WeatherReading → FarmerAlert
- */
+//abstract base class
 public static abstract class EnvironmentalReading {
 
     protected final String day;
@@ -35,26 +24,14 @@ public static abstract class EnvironmentalReading {
 }
 
 
-// ============================================================
-//  CONCRETE — WeatherReading
-// ============================================================
-/**
- * WeatherReading — validated weather observation with derived agro-metrics.
- *
- * Derived metrics (computed in constructor, stored as final fields):
- *   heatIndex    — apparent temperature felt by crops/workers
- *   evap         — reference evapotranspiration (Hargreaves approx.)
- *   dewPoint     — Magnus formula dew point
- *   waterDeficit — mm gap between actual rain and crop daily need
- *   kelvin       — temperature in Kelvin (used in thermodynamic displays)
- */
+//weather reading class
 public static class WeatherReading extends EnvironmentalReading {
 
     private final double temp, humidity, rainfall, windSpeed;
     private final String windDir;
     private final int    aqi;
 
-    // Derived — computed once at construction time
+    //derived metrics
     private final double heatIndex, evap, dewPoint, waterDeficit, kelvin;
 
     public WeatherReading(String day, double temp, double humidity,
@@ -68,7 +45,6 @@ public static class WeatherReading extends EnvironmentalReading {
         this.windDir   = windDir;
         this.aqi       = (int) checkRange("AQI", aqi, 0, 500);
 
-        // Derived metrics
         this.heatIndex   = rd(temp + (0.33 * (humidity / 100) * 6.105) - 4.0);
         this.evap        = rd(0.0023 * (temp + 17.8) * Math.pow(100 - humidity, 0.5));
         double a = 17.27, b = 237.7, g = (a * temp) / (b + temp) + (humidity / 100.0);
@@ -77,7 +53,7 @@ public static class WeatherReading extends EnvironmentalReading {
         this.kelvin      = rd(temp + 273.15);
     }
 
-    // ── Validation helpers ───────────────────────────────────────────────────
+   //validation helpers
     private double checkRange(String name, double v, double lo, double hi) {
         if (v < lo || v > hi)
             throw new ValidationException(name + " " + v + " out of range [" + lo + "–" + hi + "]");
@@ -88,8 +64,7 @@ public static class WeatherReading extends EnvironmentalReading {
         return v;
     }
     private double rd(double v) { return Math.round(v * 100.0) / 100.0; }
-
-    // ── Field accessors ──────────────────────────────────────────────────────
+//gettrs
     public double getTemp()         { return temp; }
     public double getHumidity()     { return humidity; }
     public double getRainfall()     { return rainfall; }
@@ -102,7 +77,7 @@ public static class WeatherReading extends EnvironmentalReading {
     public double getWaterDeficit() { return waterDeficit; }
     public double getKelvin()       { return kelvin; }
 
-    // ── Agronomic status strings ─────────────────────────────────────────────
+//status methods
     public String tempStatus() {
         if (temp >= Cfg.TEMP_HEATWAVE)    return "CRITICAL: Heat stress — irrigate immediately";
         if (temp >= Cfg.TEMP_OPTIMAL_LOW) return "OK: Temperature within optimal range";
@@ -156,20 +131,7 @@ public static class WeatherReading extends EnvironmentalReading {
     }
 }
 
-
-// ============================================================
-//  SUBCLASS — FarmerAlert  (M3 inheritance demo)
-// ============================================================
-/**
- * FarmerAlert extends WeatherReading to add plain-English farmer advice.
- *
- * This is the M3 inheritance requirement:
- *   FarmerAlert IS-A WeatherReading (inherits all validation + metrics)
- *   but adds farmerAdvice() — actionable text for farmers, not engineers.
- *
- * All readings created in the system are FarmerAlert instances so that
- * the Summary panel can always call fa.farmerAdvice().
- */
+//subclass,,,farm alerts class
 public static class FarmerAlert extends WeatherReading {
 
     public FarmerAlert(String day, double t, double h, double r,
@@ -177,10 +139,6 @@ public static class FarmerAlert extends WeatherReading {
         super(day, t, h, r, w, d, aqi);
     }
 
-    /**
-     * Returns bullet-point advice in plain Swahili/English suitable for
-     * display in the Farmer Alerts text area.
-     */
     public String farmerAdvice() {
         StringBuilder sb = new StringBuilder();
         if (getTemp()      >= Cfg.TEMP_HEATWAVE)   sb.append("* Dangerously hot. Water crops now.\n");

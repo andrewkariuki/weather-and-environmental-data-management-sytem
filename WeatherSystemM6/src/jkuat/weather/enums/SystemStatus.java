@@ -1,9 +1,5 @@
 package jkuat.weather.enums;
-
-/**
- * SystemStatus — represents the current state of the sensor feed pipeline.
- * Displayed in the top bar and sensor panel status label.
- */
+//represents status of the system
 public enum SystemStatus {
     IDLE       ("IDLE",        "#607D8B"),
     COLLECTING ("COLLECTING",  "#FFC107"),

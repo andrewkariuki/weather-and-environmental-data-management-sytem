@@ -2,10 +2,7 @@ package jkuat.weather.enums;
 
 import jkuat.weather.utils.Cfg;
 
-/**
- * AlertLevel — classifies sensor/weather readings into severity tiers.
- * Used by AlertLevel.classify() to drive UI colouring and farmer advice.
- */
+//classifies sensor readings to alert levels
 public enum AlertLevel {
     NORMAL  (1, "NORMAL",   "#4CAF50"),
     NOTICE  (2, "NOTICE",   "#2196F3"),
@@ -18,10 +15,7 @@ public enum AlertLevel {
 
     AlertLevel(int v, String l, String c) { val = v; label = l; color = c; }
 
-    /**
-     * Classify a raw sensor value for a named parameter.
-     * Called by ConcurrentSensorFeed for each reading.
-     */
+    //classifies a sensor reading to an alert level based on thresholds defined in Cfg
     public static AlertLevel classify(String param, double v) {
         return switch (param) {
             case "TEMP"       -> v >= Cfg.TEMP_HEATWAVE   ? CRITICAL

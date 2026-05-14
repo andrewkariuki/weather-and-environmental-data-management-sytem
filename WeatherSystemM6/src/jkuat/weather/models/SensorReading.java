@@ -6,16 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import jkuat.weather.enums.AlertLevel;
 
-/**
- * SensorReading — one timestamped reading from a single physical sensor.
- *
- * Holds JavaFX property wrappers (tsProp, idProp, …) so that TableView
- * columns can bind directly — no manual cell factories needed.
- *
- * Created by ConcurrentSensorFeed threads and displayed in:
- *   • SensorController  → full sensor table
- *   • DashboardController → rolling live feed strip
- */
+/// Represents a single sensor reading with all alert level.
 public class SensorReading {
 
     public final String     sensorId;
@@ -34,8 +25,7 @@ public class SensorReading {
         this.timestamp  = ts;
         this.alertLevel = al;
     }
-
-    // ── JavaFX property wrappers for TableView column binding ────────────────
+// JavaFX properties for UI binding
     public StringProperty tsProp()    { return new SimpleStringProperty(timestamp); }
     public StringProperty idProp()    { return new SimpleStringProperty(sensorId); }
     public StringProperty paramProp() { return new SimpleStringProperty(parameter); }

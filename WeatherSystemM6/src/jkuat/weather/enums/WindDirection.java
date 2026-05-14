@@ -2,10 +2,7 @@ package jkuat.weather.enums;
 
 import jkuat.weather.exceptions.ValidationException;
 
-/**
- * WindDirection — compass rose directions validated on user input.
- * WindDirection.from(String) is called by the Live Entry panel.
- */
+//represents the 8 cardinal 
 public enum WindDirection {
     N, NE, E, SE, S, SW, W, NW;
 
