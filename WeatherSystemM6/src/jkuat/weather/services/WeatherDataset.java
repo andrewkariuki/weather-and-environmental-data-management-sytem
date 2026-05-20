@@ -6,22 +6,10 @@ import java.util.List;
 import java.util.OptionalDouble;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
-
 import jkuat.weather.models.WeatherModels.WeatherReading;
 import jkuat.weather.utils.Cfg;
 
-// ============================================================
-//  WeatherDataset — non-thread-safe, UI-thread only
-// ============================================================
-/**
- * WeatherDataset — in-memory store for WeatherReading objects.
- *
- * All stream operations (avg, filter, sort) expose the M5 functional
- * programming requirement: map / reduce / filter / sorted with lambdas.
- *
- * Used exclusively on the JavaFX Application Thread (not shared between
- * background threads — use ThreadSafeDataset for that).
- */
+
 public class WeatherDataset {
 
     private final List<WeatherReading> data = new ArrayList<>();
@@ -32,7 +20,7 @@ public class WeatherDataset {
     public boolean isEmpty() { return data.isEmpty(); }
     public void    clear()   { data.clear(); }
 
-    // ── Aggregates (map + reduce) ────────────────────────────────────────────
+    // map and reduce
     public OptionalDouble avgTemp()     { return data.stream().mapToDouble(WeatherReading::getTemp).average(); }
     public OptionalDouble avgHumidity() { return data.stream().mapToDouble(WeatherReading::getHumidity).average(); }
     public double totalRainfall()       { return data.stream().mapToDouble(WeatherReading::getRainfall).sum(); }
@@ -41,7 +29,7 @@ public class WeatherDataset {
     public double peakWind()            { return data.stream().mapToDouble(WeatherReading::getWindSpeed).max().orElse(0); }
     public int    peakAqi()             { return data.stream().mapToInt(WeatherReading::getAqi).max().orElse(0); }
 
-    // ── Filters (filter + lambda) ────────────────────────────────────────────
+    // filter and lambda
     public List<WeatherReading> criticalDays() {
         return data.stream().filter(r -> r.getOverallStatus().equals("CRITICAL")).collect(Collectors.toList());
     }
@@ -58,7 +46,7 @@ public class WeatherDataset {
         return data.stream().filter(r -> r.getHumidity() > Cfg.HUMIDITY_DISEASE).collect(Collectors.toList());
     }
 
-    // ── Sorted (sorted + Comparator lambda) ──────────────────────────────────
+    // sort
     public List<WeatherReading> sortedByTemp() {
         return data.stream()
                    .sorted(Comparator.comparingDouble(WeatherReading::getTemp).reversed())
@@ -72,18 +60,6 @@ public class WeatherDataset {
 }
 
 
-// ============================================================
-//  ThreadSafeDataset — for cross-thread sensor/API data
-// ============================================================
-/**
- * ThreadSafeDataset — generic thread-safe list using ReentrantReadWriteLock.
- *
- * Multiple sensor threads write concurrently; the UI thread reads.
- * ReadWriteLock allows many simultaneous reads but exclusive writes,
- * which is more efficient than a plain synchronized list for read-heavy loads.
- *
- * This is the M5 concurrency requirement for thread-safe data structures.
- */
 class ThreadSafeDataset {
 
     private final List<Object>             data = new ArrayList<>();

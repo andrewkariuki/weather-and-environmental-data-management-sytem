@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
 import jkuat.weather.exceptions.APIException;
 import jkuat.weather.models.WeatherModels.FarmerAlert;
 import jkuat.weather.models.WeatherModels.WeatherReading;
@@ -21,24 +20,9 @@ import jkuat.weather.utils.WeatherLogger;
 
 public class DataServices {
 
-// ============================================================
-//  RealisticDataGenerator — Juja climate model (offline)
-// ============================================================
-/**
- * RealisticDataGenerator — produces climate-realistic synthetic rows
- * when the Open-Meteo API is unavailable.
- *
- * Uses a month × parameter lookup table (MONTHS) that models Juja's
- * four seasons: Long Rains (Mar–May), Short Rains (Sep–Nov),
- * two Dry seasons (Jun–Aug, Dec–Feb).
- *
- * Called by PowerBIExporter (option C) and as a padding fallback
- * when the API returns fewer rows than requested.
- */
+
 public static class RealisticDataGenerator {
 
-    /** Month profiles: {tMin,tMax, rainProb%,rainMin,rainMax,
-     *                   humMin,humMax, windMin,windMax, aqiMin,aqiMax} */
     private static final int[][] MONTHS = {
         {18,30, 15,0,8,   45,70, 5,25,  40,90},   // Jan
         {19,31, 18,0,10,  45,72, 5,28,  40,95},   // Feb
@@ -109,7 +93,7 @@ public static class RealisticDataGenerator {
         return rows;
     }
 
-    /** Convert raw map rows to FarmerAlert domain objects for the dataset. */
+    // Convert raw map rows to FarmerAlert domain objects for the dataset. 
     public static List<WeatherReading> toReadings(List<Map<String,Object>> rows) {
         List<WeatherReading> result = new ArrayList<>();
         for (var row : rows) {
@@ -133,25 +117,7 @@ public static class RealisticDataGenerator {
     }
 }
 
-
-// ============================================================
-//  OpenMeteoAPI — real weather fetch (online)
-// ============================================================
-/**
- * OpenMeteoAPI — fetches real daily weather for Juja from the free
- * Open-Meteo API (no API key required).
- *
- * Endpoint: api.open-meteo.com/v1/forecast
- * Parameters: past 92 days + 1 forecast day, daily resolution.
- *
- * If the API returns fewer rows than targetRows, the gap is padded
- * with RealisticDataGenerator rows so the PowerBI export is always full.
- *
- * JSON is parsed manually (no external library dependency) using
- * simple string search — keeps the build simple for a student project.
- *
- * Called from PowerBIController on a background Task.
- */
+//API
 public static class OpenMeteoAPI {
 
     private static final String BASE =
@@ -267,7 +233,7 @@ public static class OpenMeteoAPI {
         } catch (Exception e)    { throw new APIException("Network error: " + e.getMessage(), e); }
     }
 
-    // ── JSON helpers ─────────────────────────────────────────────────────────
+    //json helpers
     private static List<String> extractArr(String json, String key) {
         List<String> r = new ArrayList<>();
         int idx = json.indexOf(key); if (idx < 0) return r;

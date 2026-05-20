@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import jkuat.weather.exceptions.EmptyDatasetException;
 import jkuat.weather.exceptions.FileHandlingException;
 import jkuat.weather.models.SensorReading;
@@ -91,18 +90,7 @@ public static class WeatherFileHandler {
 }
 
 
-// ============================================================
-//  PowerBIExporter — enriched 1000-row CSV for Power BI
-// ============================================================
-/**
- * PowerBIExporter — generates a Power BI–ready CSV with derived columns.
- *
- * enrich() adds: heat_index, evapotranspiration, dew_point,
- *                water_deficit, alert_level, overall_status
- *
- * export() writes the full file and returns the path string for display.
- * Called from PowerBIController on a background Task.
- */
+//generates data ready for csv export
 public static class PowerBIExporter {
 
     public static final String[] HEADERS = {
@@ -166,13 +154,7 @@ public static class PowerBIExporter {
 }
 
 
-// ============================================================
-//  SensorExporter — sensor readings CSV
-// ============================================================
-/**
- * SensorExporter — writes SensorReading list to sensor_readings.csv.
- * Called by SensorController "Export Sensor CSV" button.
- */
+//sensor exporter
 public static class SensorExporter {
 
     public static String export(List<SensorReading> readings, WeatherLogger logger)

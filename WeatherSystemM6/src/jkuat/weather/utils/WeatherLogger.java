@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-//weather logger class for time-stamped log entries of events, errors, and info messages
 public class WeatherLogger {
 
     private static final DateTimeFormatter FMT =
@@ -41,13 +40,12 @@ public class WeatherLogger {
     public void error  (String m) { write("ERROR",   m); }
     public void event  (String m) { write("EVENT",   m); }
 
-//returns the most recent n log entries from memory
+    
     public synchronized List<String> recent(int n) {
         int from = Math.max(0, mem.size() - n);
         return new ArrayList<>(mem.subList(from, mem.size()));
     }
 
-//reads the entire log file content as a string
     public String readAll() {
         try { return Files.readString(java.nio.file.Path.of(path)); }
         catch (IOException e) { return "(No log file yet)"; }

@@ -483,7 +483,7 @@ public class SimulationController {
             if (liveFeedRows.size() > 8) liveFeedRows.remove(liveFeedRows.size() - 1);
         });
     }
-//refresh dashboard with latest dataset
+//dataset refresh
     public void refreshDashboard(Node dashPanel) {
         if (dataset.isEmpty() || dashPanel == null) return;
         Platform.runLater(() -> {

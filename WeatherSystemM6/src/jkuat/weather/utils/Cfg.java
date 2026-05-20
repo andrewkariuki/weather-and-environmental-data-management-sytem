@@ -3,7 +3,7 @@ package jkuat.weather.utils;
 import java.io.File;
 import java.util.List;
 
-//centralized constants and configuration for the weather system
+//centralized constants and configuration 
 public class Cfg {
 
   //station metadata

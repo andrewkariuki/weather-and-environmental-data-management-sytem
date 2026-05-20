@@ -8,24 +8,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
-
 import jkuat.weather.enums.AlertLevel;
 import jkuat.weather.enums.SystemStatus;
 import jkuat.weather.models.SensorReading;
 import jkuat.weather.utils.WeatherLogger;
 
-// ============================================================
-//  SensorBuffer<T> — generic bounded buffer (M5 generics)
-// ============================================================
-/**
- * SensorBuffer&lt;T&gt; — bounded, thread-safe buffer for sensor data.
- *
- * Generic type T means the same buffer works for SensorReading today
- * and for any future sensor type without code duplication.
- *
- * Thread safety: ReentrantLock on push() and drain() prevents data races
- * when multiple sensor threads write simultaneously.
- */
+//generic buffer  
 class SensorBuffer<T> {
 
     private final List<T>      buf = new ArrayList<>();
@@ -34,7 +22,6 @@ class SensorBuffer<T> {
 
     public SensorBuffer(int capacity) { this.cap = capacity; }
 
-    /** Push one item. Returns false (drops item) if buffer is full. */
     public boolean push(T item) {
         lock.lock();
         try {
@@ -44,7 +31,7 @@ class SensorBuffer<T> {
         } finally { lock.unlock(); }
     }
 
-    /** Drain all buffered items and return them, clearing the buffer. */
+
     public List<T> drain() {
         lock.lock();
         try {
@@ -62,25 +49,8 @@ class SensorBuffer<T> {
 }
 
 
-// ============================================================
-//  ConcurrentSensorFeed — 7 sensor threads (M5 concurrency)
-// ============================================================
-/**
- * ConcurrentSensorFeed — simulates 7 hardware sensors running in parallel.
- *
- * Architecture:
- *   • One Thread per sensor (SENSOR-TEMP, SENSOR-HUMID, …)
- *   • All threads write into a shared SensorBuffer&lt;SensorReading&gt;
- *   • A ReentrantLock protects the combined output list
- *   • Main thread joins all worker threads (max 30 s timeout)
- *   • Returns readings sorted by timestamp for display
- *
- * Called from SensorController.runSensors() on a background Task,
- * never on the JavaFX Application Thread.
- */
 public class ConcurrentSensorFeed {
 
-    /** Sensor definitions: {id, parameter, min, max, unit} */
     public static final String[][] SENSORS = {
         {"SENSOR-TEMP",  "TEMP",       "18", "42",  "C"},
         {"SENSOR-HUMID", "HUMIDITY",   "30", "100", "%"},
@@ -102,10 +72,8 @@ public class ConcurrentSensorFeed {
 
     public SystemStatus getStatus() { return status; }
 
-    /**
-     * Spawns numSensors threads, collects all readings, joins, returns sorted list.
-     * Must be called off the JavaFX Application Thread (use inside Task.call()).
-     */
+
+    
     public List<SensorReading> run(WeatherLogger logger) throws InterruptedException {
         status = SystemStatus.COLLECTING;
 
@@ -135,14 +103,14 @@ public class ConcurrentSensorFeed {
                     try { Thread.sleep(1 + rng.nextInt(4)); }
                     catch (InterruptedException e) { Thread.currentThread().interrupt(); }
                 }
-            }, id);   // thread name = sensor id — visible in thread dumps
+            }, id);   
 
             t.setDaemon(true);
             threads.add(t);
         }
 
         for (Thread t : threads) t.start();
-        for (Thread t : threads) t.join(30_000);   // 30 s safety timeout
+        for (Thread t : threads) t.join(30_000);   
 
         status = SystemStatus.READY;
         all.sort(Comparator.comparing(r -> r.timestamp));

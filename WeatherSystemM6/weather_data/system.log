@@ -151,3 +151,45 @@
 [2026-05-14 20:13:10] [INFO   ] Summary refreshed — 7 readings.
 [2026-05-14 20:13:11] [INFO   ] Summary refreshed — 7 readings.
 [2026-05-14 20:42:58] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-15 05:54:01] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-15 05:54:15] [INFO   ] Running simulation...
+[2026-05-15 05:54:16] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-15 05:54:16] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-15 05:54:39] [INFO   ] Summary refreshed — 7 readings.
+[2026-05-15 05:54:42] [INFO   ] Summary refreshed — 7 readings.
+[2026-05-16 10:42:01] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-16 10:42:30] [EVENT  ] Open-Meteo: 93 real + 907 generated = 1000 rows
+[2026-05-16 10:42:30] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 181.0 KB)
+[2026-05-16 10:42:30] [INFO   ] Power BI export complete.
+[2026-05-16 10:42:45] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-16 10:42:45] [INFO   ] CSV saved.
+[2026-05-16 10:43:07] [INFO   ] Summary refreshed — 1000 readings.
+[2026-05-16 10:43:29] [INFO   ] Analysis complete — 1000 readings.
+[2026-05-16 10:43:52] [INFO   ] Running simulation...
+[2026-05-16 10:43:53] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-16 10:43:53] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-16 10:43:59] [EVENT  ] CSV saved: weather_data\weather_readings.csv (7 records)
+[2026-05-16 10:43:59] [INFO   ] CSV saved.
+[2026-05-16 10:44:02] [INFO   ] Analysis complete — 7 readings.
+[2026-05-16 10:58:11] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-16 11:10:06] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-16 11:10:19] [EVENT  ] Open-Meteo: 93 real + 907 generated = 1000 rows
+[2026-05-16 11:10:19] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 181.0 KB)
+[2026-05-16 11:10:19] [INFO   ] Power BI export complete.
+[2026-05-16 11:10:23] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-16 11:10:23] [INFO   ] CSV saved.
+[2026-05-19 20:46:14] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-19 20:46:36] [EVENT  ] Sensor run: 1400 readings from 7 threads
+[2026-05-19 20:46:36] [INFO   ] Sensor run complete — 0 readings.
+[2026-05-19 20:46:53] [EVENT  ] Sensor run: 1400 readings from 7 threads
+[2026-05-19 20:46:53] [INFO   ] Sensor run complete — 1400 readings.
+[2026-05-19 20:47:13] [INFO   ] Running simulation...
+[2026-05-19 20:47:13] [INFO   ] Simulation complete — 7 days loaded.
+[2026-05-19 20:47:13] [EVENT  ] 7-day simulation completed — 7 readings
+[2026-05-19 20:47:33] [EVENT  ] PowerBI CSV: weather_data\powerbi_weather_export.csv (1000 rows | 183.3 KB)
+[2026-05-19 20:47:33] [INFO   ] Power BI export complete.
+[2026-05-19 20:47:42] [EVENT  ] CSV saved: weather_data\weather_readings.csv (1000 records)
+[2026-05-19 20:47:42] [INFO   ] CSV saved.
+[2026-05-19 20:54:26] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-19 20:56:37] [EVENT  ] M6 JavaFX started — clean architecture build
+[2026-05-20 08:54:16] [EVENT  ] M6 JavaFX started — clean architecture build
